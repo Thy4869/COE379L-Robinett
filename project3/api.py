@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 # LOADING THE MODEL YIPPEEEE
 model_ANN = tf.keras.models.load_model('models/imagesANN_1.keras')
-model_ANN_2 = tf.keras.models.load_model('models/imagesANN_2.keras')
 model_CNN = tf.keras.models.load_model('models/imagesCNN_1.keras')
 model_altCNN = tf.keras.models.load_model('models/images_altCNN_1.keras')
 
@@ -18,7 +17,6 @@ def home():
       "routes": [
          "/models/best - Best model (Alternative CNN) to classify images",
          "/models/imagesANN/v1 - Dense ANN model",
-         "/models/imagesANN/v2 - Dense ANN model 2",
          "/models/imagesCNN/v1 - CNN model",
          "/models/images_altCNN/v1 - Alternative CNN model",
       ]
@@ -32,16 +30,6 @@ def model_info_ANN():
       "name": "imagesANN",
       "description": "Classify images that have damage or not using a dense ANN (Artificial Neural Network)",
       "number_of_parameters": 6316417
-   }
-
-# Create a route to talk about the model imagesANN_2.keras
-@app.route('/models/imagesANN/v2', methods=['GET'])
-def model_info_ANN_2():
-   return {
-      "version": "v2",
-      "name": "imagesANN",
-      "description": "Classify images that have damage or not using a dense ANN (Artificial Neural Network) with a different architecture",
-      "number_of_parameters": 12624385
    }
 
 # Create a route to talk about the model imagesCNN_1.keras
@@ -97,19 +85,6 @@ def classify_image_ANN():
       return {"error": f"Could not process the `image` field; details: {e}"}, 404
    # Converted result of model to list because numpy array is returned ans is not serializable in json, so regular list is returned
    return { "result": model_ANN.predict(data).tolist()}
-
-# Pass the image to the model and return the prediction
-@app.route('/models/imagesANN/v2', methods=['POST'])
-def classify_image_ANN_2():
-   im = request.json.get('image')
-   if not im:
-      return {"error": "The `image` field is required"}, 404
-   try:
-      data = preprocess_input(im)
-   except Exception as e:
-      return {"error": f"Could not process the `image` field; details: {e}"}, 404
-   # Converted result of model to list because numpy array is returned ans is not serializable in json, so regular list is returned
-   return { "result": model_ANN_2.predict(data).tolist()}
 
 # Pass the image to the model and return the prediction
 @app.route('/models/imagesCNN/v1', methods=['POST'])
