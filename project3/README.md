@@ -8,21 +8,24 @@ This readme is located in the project3 folder of the github repository of James 
 ---
 1. ### **Inference Server and you**
 
-Located in this repository are all of the required files needed to properly run a flask inference server. We have a `Dockerfile`, `api.py` and the `models` folder. Other folders or scrips will not be necessary (unless you want a peek under the hood :0). First, we can containerize our dockerfile using the command
-```
-docker build -t <username>/proj3-nnet-api .      
-```
+Located in this repository are all of the required files needed to properly run a flask inference server. The only required file needed to start the inference server is `docker-compose.yml`! Other folders or scrips will not be necessary (backup help located at the bottom of this readme). All that it takes to run our containerized flask server is to run the command:
+
 ***Make sure you are in the correct directory! (project3)***
 
-This takes the dockerfile in this project repository and creates and creates the needed docker image! Make sure to replace the `<username>` with your own docker username. The docker container should have copied over `api.py` and the `models` folder.
-
-Next, let's run our docker container using the command:
-
 ```
-docker run -it --rm -p 5000:5000 <username>/proj3-nnet-api
+docker-compose up
 ```
 
-This runs the recently created docker container on port *5000*. Give it some time, it should start up a flask server! Now, we can start looking at whats inside the inference server.
+Now, if the image is not already downloaded, it will grab the image created by us from Docker Hub and automatically start the flask server!
+
+In case of cleaning, you can remove the composed docker container with
+```
+docker-compose down
+```
+and you can remove the image with
+```
+docker rmi jwallee/proj3-nnet-api:latest
+```
 
 ---
 2. ### **Whats in the box?!?!**
@@ -206,3 +209,21 @@ No Damage Correct: 16
 ```
 
 And there you go! It counted the number of correct images predicted by the model from the number of images you sent it.
+
+5. ### **Extras and Bonus Features**
+
+If for some reason you need to build the docker image locally, here are the commands to do so. We built the docker image using this command:
+
+```
+docker build -t <username>/proj3-nnet-api .      
+```
+
+This takes the dockerfile in this project repository and creates the needed docker image. Make sure to replace the `<username>` with your own docker username. The docker container should have copied over `api.py` and the `models` folder.
+
+Next, let's run our docker container using the command:
+
+```
+docker run -it --rm -p 5000:5000 <username>/proj3-nnet-api
+```
+
+This runs the recently created docker container on port *5000*. Give it some time, it should start up a flask server! Now, we can start looking at whats inside the inference server.
