@@ -45,7 +45,6 @@ This should give a small welcome message, as well as the routes avaliable:
   "routes": [
     "/models/best - Best model (Alternative CNN) to classify images",
     "/models/imagesANN/v1 - Dense ANN model",
-    "/models/imagesANN/v2 - Dense ANN model 2",
     "/models/imagesCNN/v1 - CNN model",
     "/models/images_altCNN/v1 - Alternative CNN model",
   ]
