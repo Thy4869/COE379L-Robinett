@@ -2,3 +2,4 @@ spambase/
 classwork/data/
 .history
 .DS_Store
+/classwork/hf_cache/
